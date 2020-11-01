@@ -8,6 +8,7 @@ public class Bird : MonoBehaviour
     public static Bird instance;
 
     private Rigidbody2D myRigidbody;
+    private AudioSource audioSource;
 
     private Animator anim;
 
@@ -17,9 +18,15 @@ public class Bird : MonoBehaviour
     private Button FlapButton;
     private bool didFlap;
     public bool isAlive;
+
+    public AudioClip flipClip, pointClip, diedClip;
+
+    public int score=0;
+
     private void Awake()
     {
         myRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         anim = gameObject.GetComponent<Animator>();
         FlapButton = GameObject.FindGameObjectWithTag("FlapButton").GetComponent<Button>();
 
@@ -57,6 +64,8 @@ public class Bird : MonoBehaviour
             {
                 didFlap = false;
                 myRigidbody.velocity = new Vector2(0,bounceSpeed);
+               // audioSource.clip = flipClip; // alternetiv is playoneshot
+                audioSource.PlayOneShot(flipClip);
                 anim.SetTrigger("Flap");
             }
 
@@ -88,4 +97,32 @@ public class Bird : MonoBehaviour
     {
         didFlap = true;
     }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.LogError("-------collision------"+col.gameObject.name);
+
+        if(col.gameObject.tag=="Ground" || col.gameObject.tag=="Pipe")
+        {
+            if(isAlive)
+            {
+                isAlive = false;
+                anim.SetTrigger("Die");
+                audioSource.PlayOneShot(diedClip);
+            }
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.LogError("--------Collider----------"+col.gameObject.name);
+        if(col.tag=="PipeHolder")
+        {
+            score++;
+            audioSource.PlayOneShot(pointClip);
+        }
+    }
+
+
 }
