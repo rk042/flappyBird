@@ -28,7 +28,7 @@ public class BGcollecter : MonoBehaviour
         
         for(int i=1;i<ground.Length;i++)
         {
-            Debug.LogError(ground.Length);
+            //Debug.LogError(ground.Length);
             if(lastGroundx < ground[i].transform.position.x)
             {
                 lastGroundx = ground[i].transform.position.x;
@@ -43,7 +43,7 @@ public class BGcollecter : MonoBehaviour
         {
             Vector3 temp = target.transform.position;
             float width = ((BoxCollider2D)target).size.x;
-            print("---" + width + "---" + "----" + lastBGx + "-----");
+            //print("---" + width + "---" + "----" + lastBGx + "-----");
             temp.x = lastBGx + width;
 
             target.transform.position = temp;
@@ -54,7 +54,7 @@ public class BGcollecter : MonoBehaviour
         {
             Vector3 temp = target.transform.position;
             float width = ((BoxCollider2D)target).size.x;
-            print("---"+width+"---"+"----"+lastGroundx+"-----");
+           // print("---"+width+"---"+"----"+lastGroundx+"-----");
             temp.x = lastGroundx + width;
 
             target.transform.position = temp;

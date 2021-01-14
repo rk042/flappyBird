@@ -38,14 +38,14 @@ public class Bird : MonoBehaviour
         }
 
         isAlive = true;
-
+        print("bird script awake");
         setCameraX();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        print("bird script start");
     }
 
     private void FixedUpdate()
